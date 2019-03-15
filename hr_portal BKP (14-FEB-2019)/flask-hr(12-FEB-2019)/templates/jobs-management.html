@@ -1,0 +1,222 @@
+{% include 'header.html' %}
+
+
+{% block body %}
+
+<body id="page-top">
+
+  <div id="wrapper">
+    {% include 'sidebar.html' %}
+
+    <div id="content-wrapper" class="d-flex flex-column">
+
+          <!-- Main Content -->
+          <div id="content">
+
+
+            {% include 'topbar.html' %}
+
+
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+              {% for rows in session['username'] %}
+               {% if rows[9]==1 %}
+
+              <!-- Page Heading -->
+              <h1 class="h3 mb-2 text-gray-800">MANAGE JOBS</h1>
+
+              {%with messages = get_flashed_messages()%}
+
+              {%if messages%}
+
+              {% for message in messages %}
+
+
+              <div class="alert alert-success alert-dismissable" role="alert">
+
+               <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+
+                   <span aria-hidden="true">&times;</span>
+
+               </button>
+                  {{message}}
+
+
+              </div>
+
+
+              {%endfor%}
+              {%endif%}
+              {%endwith%}
+
+
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">List of Jobs</h6>
+
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Job Name</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tfoot>
+                        <tr>
+                          <th>Id</th>
+                          <th>Job Name</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </tfoot>
+                      <tbody>
+                      {% for row in students %}
+
+                        <tr>
+                          <td>{{ loop.index }}</td>
+                          <td>{{ row.1 }}</td>
+                          <td>{{row.2}}</td>
+                          <td>
+                            <a href="/update/{{row.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
+                             <a href="/delete-job/{{ row.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
+                          </td>
+                        </tr>
+
+                        <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+
+
+              <div class="modal-dialog">
+
+
+              <div class="modal-content">
+
+
+                 <div class="modal-header">
+
+
+                    <h4 class="modal-title">Update Information</h4>
+
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+
+                 </div>
+
+
+                 <div class="modal-body">
+
+
+                    <form action="{{ url_for('updateJob') }}" method="POST">
+
+
+                       <div class="form-group">
+
+
+                          <label>Job Name:</label>
+                           <input type="hidden"  name="id" value="{{row.0}}">
+
+                          <input type="text" class="form-control" name="job_category" value="{{row.1}}">
+
+
+                       </div>
+
+                       <div class="form-group">
+
+
+                          <label>Status:</label>
+
+                          <select class="form-control" id="jobStatus" name="status" required>
+
+                             <option value="Enable" {% if row.2=="Enable" %} selected  {% endif %}>Enable</option>
+                             <option value="Disable" {% if row.2=="Disable" %} selected {% endif %}>Disable</option>
+                          </select>
+
+
+
+                       </div>
+
+
+
+
+                       <div class="form-group">
+
+
+                          <button class="btn btn-primary" type="sbumit">Update</button>
+
+
+                       </div>
+
+
+                    </form>
+
+
+                 </div>
+
+
+                 <div class="modal-footer">
+
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+
+                 </div>
+
+
+              </div>
+
+
+              </div>
+
+
+              </div>
+
+
+
+                        {% endfor  %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+              {%endif%}
+
+             {% endfor  %}
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+          </div>
+          <!-- End of Main Content -->
+
+          <!-- Footer -->
+          {% include 'footer-copyright.html' %}
+          <!-- End of Footer -->
+
+
+        </div>
+
+     </div>
+
+
+
+
+{% endblock %}
+
+    <!-- Bootstrap core JavaScript-->
+{% include 'footer.html' %}

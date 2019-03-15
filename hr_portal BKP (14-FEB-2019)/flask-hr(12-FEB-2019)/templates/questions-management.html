@@ -1,0 +1,82 @@
+{% include 'header.html' %}
+
+
+{% block body %}
+
+<body id="page-top">
+
+  <div id="wrapper">
+    {% include 'sidebar.html' %}
+
+    <div id="content-wrapper" class="d-flex flex-column">
+
+          <!-- Main Content -->
+          <div id="content">
+
+
+            {% include 'topbar.html' %}
+
+
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+              {% for rows in session['username'] %}
+               {% if rows[8]==1 %}
+
+              <!-- Page Heading -->
+              <h1 class="h3 mb-2 text-gray-800">MANAGE QUESTIONS</h1>
+
+              {%with messages = get_flashed_messages()%}
+
+              {%if messages%}
+
+              {% for message in messages %}
+
+
+              <div class="alert alert-success alert-dismissable" role="alert">
+
+               <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+
+                   <span aria-hidden="true">&times;</span>
+
+               </button>
+                  {{message}}
+
+
+              </div>
+
+
+              {%endfor%}
+              {%endif%}
+              {%endwith%}
+
+
+
+              {%endif%}
+
+             {% endfor  %}
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+          </div>
+          <!-- End of Main Content -->
+
+          <!-- Footer -->
+          {% include 'footer-copyright.html' %}
+          <!-- End of Footer -->
+
+
+        </div>
+
+     </div>
+
+
+
+
+{% endblock %}
+
+    <!-- Bootstrap core JavaScript-->
+{% include 'footer.html' %}

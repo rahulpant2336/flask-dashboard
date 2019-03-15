@@ -1,0 +1,135 @@
+{% include 'header.html' %}
+
+{% block body %}
+
+<body class="registration-page">
+
+  <div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+
+          <div class="col-lg-12">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+              </div>
+
+              {%with messages = get_flashed_messages()%}
+
+              {%if messages%}
+
+              {% for message in messages %}
+
+              {% if success=="error" %}
+
+              <div class="alert alert-danger alert-dismissable" role="alert">
+
+               <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+
+                   <span aria-hidden="true">&times;</span>
+
+               </button>
+                  {{message}}
+
+
+              </div>
+
+              {%endif%}
+
+              {% if success=="success" %}
+
+              <div class="alert alert-success alert-dismissable" role="alert">
+
+               <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+
+                   <span aria-hidden="true">&times;</span>
+
+               </button>
+                  {{message}}
+
+
+              </div>
+
+              {%endif%}
+
+
+              {%endfor%}
+              {%endif%}
+              {%endwith%}
+
+              <form class="user" method="post" action="{{ url_for('insert') }}">
+                <div class="form-group row">
+                  <div class="col-md-4 mb-3">
+                    <input type="text" class="form-control" name="first_name" id="exampleFirstName" placeholder="First Name" required>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <input type="text" class="form-control" name="middle_name" id="exampleMiddleName" placeholder="Middle Name" >
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control" name="last_name" id="exampleLastName" placeholder="Last Name" required>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3">
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail" placeholder="Email Address" required>
+                  </div>
+
+                  <div class="col-sm-6 mb-3">
+                         <input type="number" class="form-control" name="phone" id="examplePhone" placeholder="Phone Number" required>
+                  </div>
+
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3">
+                    <select class="form-control" id="year_of_experience" name="year_of_experience" required>
+                       <option value="">---Year Of Experience---</option>
+                       <option value="0">Less than 1 Year</option>
+                       <option value="1">1 - 2 Years</option>
+                       <option value="2">2 - 3 Years</option>
+                       <option value="3">3 - 4 Years</option>
+                       <option value="4">4 - 5 Years</option>
+                       <option value="5">Greater than 5 Years</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <select class="form-control" id="position_applied" name="position_applied" required>
+                       <option value="">---Position Applying For---</option>
+                       {% for row in jobs %}
+                       <option value="{{row.0.replace(' ', '_')}}">{{row.0}}</option>
+                       {% endfor %}
+
+                    </select>
+                  </div>
+
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3">
+                    <input type="password" class="form-control" name="password" id="exampleInputPassword" placeholder="Password" required>
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <input type="password" class="form-control" name="confirm_password" id="exampleInputConfirmPassword" placeholder="Confirm Password" required>
+                  </div>
+
+                </div>
+                <input type="submit" value="Register Account" class="btn btn-primary btn-block">
+
+              </form>
+              <hr>
+              <div class="text-center">
+                <a class="small" href="/login">Login!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}
+
+  <!-- Bootstrap core JavaScript-->
+{% include 'footer.html' %}
